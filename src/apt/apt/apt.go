@@ -216,7 +216,7 @@ func (a *Apt) DownloadAll() error {
 	}
 
 	// download all repo packages in one invocation
-	aptArgs := append("-y", "--force-yes", "-d", "install", "--reinstall")
+	aptArgs := append([]*string{}, "-y", "--force-yes", "-d", "install", "--reinstall")
 	args := append(aptArgs, repoPackages...)
 	logger.Info(strings.Join(args, " "))
 	out, err := a.command.Output("/", "apt-get", args...)
