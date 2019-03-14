@@ -61,7 +61,10 @@ type Apt struct {
 }
 
 func New(command Command, aptFile, rootDir, cacheDir, installDir string) *Apt {
-	
+	sourceList := filepath.Join(cacheDir, "apt", "sources", "sources.list")
+	trustedKeys := filepath.Join(cacheDir, "apt", "etc", "trusted.gpg")
+	preferences := filepath.Join(cacheDir, "apt", "etc", "preferences")
+	aptCacheDir := filepath.Join(cacheDir, "apt", "cache")
 	stateDir := filepath.Join(cacheDir, "apt", "state")
 
 	return &Apt{
@@ -75,11 +78,7 @@ func New(command Command, aptFile, rootDir, cacheDir, installDir string) *Apt {
 		preferences: preferences,
 		options: []string{
 			"-o", "debug::nolocking=true",
-			"-o", "dir::cache=" + aptCacheDir,
-			"-o", "dir::state=" + stateDir,
-			"-o", "dir::etc::sourcelist=" + sourceList,
-			"-o", "dir::etc::trusted=" + trustedKeys,
-			"-o", "Dir::Etc::preferences=" + preferences,
+			"-o", "dir::cache=" + aptCacheDir
 		},
 		installDir: installDir,
 		archiveDir: filepath.Join(aptCacheDir, "archives"),
