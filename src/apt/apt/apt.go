@@ -61,10 +61,7 @@ type Apt struct {
 }
 
 func New(command Command, aptFile, rootDir, cacheDir, installDir string) *Apt {
-	sourceList := filepath.Join(cacheDir, "apt", "sources", "sources.list")
-	trustedKeys := filepath.Join(cacheDir, "apt", "etc", "trusted.gpg")
-	preferences := filepath.Join(cacheDir, "apt", "etc", "preferences")
-	aptCacheDir := filepath.Join(cacheDir, "apt", "cache")
+	
 	stateDir := filepath.Join(cacheDir, "apt", "state")
 
 	return &Apt{
