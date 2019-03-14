@@ -198,6 +198,7 @@ func (a *Apt) Update() error {
 
 func (a *Apt) DownloadAll() error {
 	debPackages, repoPackages := make([]string, 0), make([]string, 0)
+	logger := libbuildpack.NewLogger(os.Stdout)
 
 	for _, pkg := range a.Packages {
 		if strings.HasSuffix(pkg, ".deb") {
@@ -217,6 +218,7 @@ func (a *Apt) DownloadAll() error {
 	// download all repo packages in one invocation
 	aptArgs := append(a.options, "-y", "--force-yes", "-d", "install", "--reinstall")
 	args := append(aptArgs, repoPackages...)
+	logger.Info(string(args))
 	out, err := a.command.Output("/", "apt-get", args...)
 	if err != nil {
 		return fmt.Errorf("failed apt-get install %s\n\n%s", out, err)
@@ -230,7 +232,7 @@ func (a *Apt) InstallAll() error {
 	if err != nil {
 		return err
 	}
-
+	
 	for _, file := range files {
 		err := a.install(filepath.Base(file))
 		if err != nil {
