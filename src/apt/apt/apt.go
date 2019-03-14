@@ -78,7 +78,7 @@ func New(command Command, aptFile, rootDir, cacheDir, installDir string) *Apt {
 		preferences: preferences,
 		options: []string{
 			"-o", "debug::nolocking=true",
-			"-o", "dir::cache=" + aptCacheDir
+			"-o", "dir::cache=" + aptCacheDir,
 		},
 		installDir: installDir,
 		archiveDir: filepath.Join(aptCacheDir, "archives"),
